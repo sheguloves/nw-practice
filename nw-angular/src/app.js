@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', [
-    require('angular-route'),
-    require('angular-animate'),
+    'ngRoute',
+    'ngAnimate',
     'appController',
     'serviceModule'
 ]);

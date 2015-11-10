@@ -1,7 +1,7 @@
 {
-    "name": "helloworld",
+    "name": "nw-practice",
     "version": "1.0.0",
-    "description": "This is my first node webkit app",
+    "description": "This is a NW.js practice",
     "main": "index.html",
     "nodejs": true, // enabled nodejs functionality
     //"node-main": "*.js", run before dom load
@@ -20,15 +20,5 @@
         "fullscreen": false,
         "show_in_taskbar": true,
         "frame": true
-    },
-    "author": "Felix Xi",
-    "license": "MIT",
-    "dependencies": {
-        "angular": "^1.4.7",
-        "angular-animate": "^1.4.7",
-        "angular-route": "^1.4.7",
-        "bcrypt-nodejs": "0.0.3",
-        "bootstrap": "^3.3.5",
-        "diskdb": "^0.1.14"
     }
 }
