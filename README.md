@@ -1,5 +1,5 @@
 # NW-practice
-This is a NW.js (node-webkit) practice
+This is a NW.js (node-webkit) practice build with AngularJS
 
 ### What is NW.js?
 You can find more info from [here](http://nwjs.io/)
@@ -40,7 +40,7 @@ npm install
 ```
 * Run project
 ```
-$ /path/to/nw.exe ./nw-angular  (suppose the current directory contains 'package.json')
+$ /path/to/nw .  (suppose the current directory contains 'package.json')
 ```
 Note: on Windows, you can drag the folder containing package.json to nw.exe to open it.
 Note: on OSX, the executable binary is in a hidden directory within the .app file. To run node-webkit on OSX, type:

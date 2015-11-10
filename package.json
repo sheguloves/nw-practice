@@ -1,15 +1,46 @@
 {
-    "name": "nw-practice",
-    "version": "1.0.0",
-    "description": "This is a NW.js practice",
-    "author": "Felix Xi",
-    "license": "MIT",
-    "dependencies": {
-        "angular": "^1.4.7",
-        "angular-animate": "^1.4.7",
-        "angular-route": "^1.4.7",
-        "bcrypt-nodejs": "0.0.3",
-        "bootstrap": "^3.3.5",
-        "diskdb": "^0.1.14"
-    }
+  "name": "nw-practice",
+  "version": "1.0.0",
+  "description": "This is a NW.js practice",
+  "main": "index.html",
+  "nodejs": true,
+  "single-instance": true,
+  "author": {
+    "name": "Felix Xi",
+    "email": "shegulove@hotmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "nw",
+    "angular",
+    "node webkit"
+  ],
+  "homepage": "https://github.com/sheguloves/nw-practice",
+  "bugs": {
+    "url": "https://github.com/sheguloves/nw-practice/issues"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "diskdb": "^0.1.14"
+  },
+  "devDependencies": {
+    "bower": "^1.6.5"
+  },
+  "window": {
+    "title": "Title",
+    "position": "center",
+    "toolbar": true,
+    "resizable": true,
+    "width": 1000,
+    "height": 800,
+    "min_width": 800,
+    "min_height": 600,
+    "always-on-top": false,
+    "fullscreen": false,
+    "show_in_taskbar": true,
+    "frame": true
+  },
+  "scripts": {
+    "postinstall": "bower install"
+  }
 }
