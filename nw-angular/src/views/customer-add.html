@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="view-alert alert-success animation" ng-show="addSuccess">
+        <strong>Will done!</strong> You successfully add the customer: {{customerName}}
+    </div>
+    <div class="view-alert alert-warning animation" ng-show="phoneExist">
+        <strong>Warning!</strong> The phone number already existed, maybe you need to check if the phone is wrong
+    </div>
+    <div class="view-alert alert-warning animation" ng-show="nameExist">
+        <strong>Warning!</strong> The customer name already existed, maybe you need to check if the name is wrong
+    </div>
+
+    <div class="content animation"
+         ng-class="{'message-show': addSuccess, 'message-hide': !addSuccess, 'warning': phoneExist || nameExist}">
+        <p class="nav-link"><a href="#/customers">Customers</a></p>
+        <form id="customerAddForm" class="form-horizontal" novalidate name="addform">
+            <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+            <div class="form-group" ng-class="{'has-error' : addform.name.$invalid && !addform.name.$pristine || customerExist}">
+                <label for="inputName" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" name="name" class="form-control" id="inputName" ng-model="customer.name"
+                           placeholder="Name is required" ng-change="changed()" required>
+                </div>
+            </div>
+            <div class="form-group" ng-show="customerExist">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <p class="text-danger">This customer already existed</p>
+                </div>
+            </div>
+            <div class="form-group" ng-show="addform.name.$invalid && !addform.name.$pristine">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <p class="text-danger">Customer name is required</p>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : addform.phone.$invalid && !addform.phone.$pristine || customerExist}">
+                <label class="col-sm-2 control-label" for="inputPhone">Phone Number</label>
+                <div class="col-sm-10">
+                    <input type="tel" class="form-control" id="inputPhone" name="phone" ng-model="customer.phone"
+                           placeholder="Phone Number: 13888888888 or 010-10101100" ng-change="changed()" required>
+                </div>
+            </div>
+            <div class="form-group" ng-show="customerExist">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <p class="text-danger">This phone already existed</p>
+                </div>
+            </div>
+            <div class="form-group" ng-show="addform.phone.$invalid && !addform.phone.$pristine">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <p class="text-danger">Phone number is required</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputQQ" class="col-sm-2 control-label">QQ</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" ng-model="customer.qq" id="inputQQ" placeholder="QQ or Wechat">
+                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error' : addform.email.$invalid && !addform.email.$pristine}">
+                <label for="inputEmail1" class="col-sm-2 control-label">Email address</label>
+                <div class="col-sm-10">
+                    <input type="email" name="email" class="form-control" ng-model="customer.email" id="inputEmail1" placeholder="example@example.com">
+                </div>
+            </div>
+            <div class="form-group" ng-show="addform.email.$invalid && !addform.email.$pristine">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <p class="text-danger">Enter a valid email</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="comments" class="col-sm-2 control-label">Comments</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" ng-model="customer.comments" id="comments" placeholder="Comments" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button type="button" ng-disabled="addform.$invalid && !customerExist"
+                            class="btn btn-default" ng-click="addCustomer(customer)"
+                            onmouseup="this.blur();">Submit</button> <!-- use blur to remove focus after click -->
+                    <button type="button" ng-click="reset()" class="btn btn-default"
+                            onmouseup="this.blur();">Reset</button> <!-- use blur to remove focus after click -->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

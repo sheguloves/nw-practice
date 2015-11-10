@@ -1,0 +1,34 @@
+{
+    "name": "helloworld",
+    "version": "1.0.0",
+    "description": "This is my first node webkit app",
+    "main": "index.html",
+    "nodejs": true, // enabled nodejs functionality
+    //"node-main": "*.js", run before dom load
+    "single-instance": true,
+    "window": {
+        "title": "Title",
+        "position": "center", // null, center, mouse
+        // "icon": "icon.png", //app icon
+        "toolbar": true,
+        "resizable": true,
+        "width": 1000,
+        "height": 800,
+        "min_width": 800,
+        "min_height": 600,
+        "always-on-top": false,
+        "fullscreen": false,
+        "show_in_taskbar": true,
+        "frame": true
+    },
+    "author": "Felix Xi",
+    "license": "MIT",
+    "dependencies": {
+        "angular": "^1.4.7",
+        "angular-animate": "^1.4.7",
+        "angular-route": "^1.4.7",
+        "bcrypt-nodejs": "0.0.3",
+        "bootstrap": "^3.3.5",
+        "diskdb": "^0.1.14"
+    }
+}
