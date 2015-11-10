@@ -24,15 +24,15 @@ Then you can build your current project with this.
 * Download NW.js. You can get it from [here](http://nwjs.io/) if you haven't it yet.
 * Run the following command
 ```
-git clone https://github.com/sheguloves/node-webkit-practice.git
+git clone https://github.com/sheguloves/nw-practice.git
 ```
 or
 ```
-git clone git@github.com:sheguloves/node-webkit-practice.git
+git clone git@github.com:sheguloves/nw-practice.git
 ```
-* Change your current directory to node-webkit-practice.
+* Change your current directory to nw-practice.
 ```
-cd node-webkit-practice
+cd nw-practice
 ```
 * Install all dependencies (if you haven't install node.js or npm, you can get it from [here](https://nodejs.org/en/))
 ```
@@ -40,7 +40,7 @@ npm install
 ```
 * Run project
 ```
-$ /path/to/nw .  (suppose the current directory contains 'package.json')
+$ /path/to/nw.exe ./nw-angular  (suppose the current directory contains 'package.json')
 ```
 Note: on Windows, you can drag the folder containing package.json to nw.exe to open it.
 Note: on OSX, the executable binary is in a hidden directory within the .app file. To run node-webkit on OSX, type:
