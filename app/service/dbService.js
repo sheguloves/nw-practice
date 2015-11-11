@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt-nodejs');
 var path = require('path');
 
 // For nodewebkit, need to use path.join to get the corresponding directory
-db.connect(path.join(process.cwd(), "src/service/datastore"), ['customers']);
+db.connect(path.join(process.cwd(), "app/service/datastore"), ['customers']);
 
 dbService.addCustomer = function(customerProfiles) {
     //TODO: add logic for add customer

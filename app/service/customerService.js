@@ -1,7 +1,7 @@
 var path = require('path');
 
 //For nodewebkit, need to use path.join to get the correct path
-var serviceUtil = require(path.join(process.cwd(), "src/service/dbService"));
+var serviceUtil = require(path.join(process.cwd(), "app/service/dbService"));
 
 var serviceModule = angular.module('serviceModule', []);
 
