@@ -19,12 +19,23 @@
   "bugs": {
     "url": "https://github.com/sheguloves/nw-practice/issues"
   },
+  "scripts": {
+    "postinstall": "bower install",
+    "gulp": "gulp"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "diskdb": "^0.1.14"
   },
   "devDependencies": {
-    "bower": "^1.6.5"
+    "bower": "^1.6.5",
+    "gulp": "^3.9.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-concat-css": "^2.2.0",
+    "gulp-html-replace": "^1.5.4",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-uglify": "^1.5.1"
   },
   "window": {
     "title": "Title",
@@ -39,8 +50,5 @@
     "fullscreen": false,
     "show_in_taskbar": true,
     "frame": true
-  },
-  "scripts": {
-    "postinstall": "bower install"
   }
 }
