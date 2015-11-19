@@ -47,6 +47,10 @@ appController.controller('customerListCtrl', ['$scope', '$timeout', 'customerSer
             }
             return false;
         };
+
+        $scope.$on("$destroy", function(event) {
+            $timeout.cancel(timer);
+        });
     }]
 );
 
@@ -96,6 +100,10 @@ appController.controller('customerDetailCtrl', ['$scope', '$routeParams', '$time
             $scope.customer = {};
             $scope.customer = angular.copy(customer);
         };
+
+        $scope.$on("$destroy", function(event) {
+            $timeout.cancel(timer);
+        });
     }]
 );
 
@@ -151,5 +159,9 @@ appController.controller('customerAddCtrl', ['$scope', '$timeout', 'customerServ
             $scope.customer = {};
             $scope.addform.$setPristine();
         };
+
+        $scope.$on("$destroy", function(event) {
+            $timeout.cancel(timer);
+        });
     }]
 );
