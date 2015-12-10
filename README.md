@@ -47,7 +47,7 @@ Note: on OSX, the executable binary is in a hidden directory within the .app fil
 ```
 /path/to/nwjs.app/Contents/MacOS/nwjs . (suppose the current directory contains 'package.json')
 ```
-* Distribute app
+### Distribute app
 ```
 npm run gulp
 ```
