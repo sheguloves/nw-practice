@@ -41,7 +41,7 @@
   "window": {
     "title": "Title",
     "position": "center",
-    "toolbar": true,
+    "toolbar": false,
     "resizable": true,
     "width": 1000,
     "height": 800,

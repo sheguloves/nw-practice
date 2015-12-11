@@ -10,7 +10,8 @@ var NwBuilder = require('nw-builder');
 var bases = {
     app: 'build/app/',
     dist: 'build/',
-    build: 'target/'
+    build: 'target/',
+    clean: ['build/', 'target/']
 };
 
 var paths = {
@@ -36,7 +37,7 @@ var paths = {
 
 // delete the build directory
 gulp.task('clean', function() {
-    return gulp.src(bases.dist.concat(bases.build))
+    return gulp.src(bases.clean, {read: false})
         .pipe(clean({force: true}));
 });
 
@@ -80,7 +81,7 @@ gulp.task('copy-fonts', ['clean'], function() {
 // replace css/libs/js with min files
 gulp.task('html-replace', ['clean', 'copy-files', 'copy-fonts', 'concat-css',
     'compressjs', 'concat-vendor'],  function() {
-    gulp.src(paths.indexhtml)
+    return gulp.src(paths.indexhtml)
         .pipe(htmlreplace({
             'css': ['app/css/bootstrap.min.css', 'app/css/font-awesome.min.css', 'app/css/app.css'],
             'libs': 'app/js/vendor.min.js',
