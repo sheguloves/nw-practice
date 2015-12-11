@@ -48,3 +48,10 @@ Note: on OSX, the executable binary is in a hidden directory within the .app fil
 /path/to/nwjs.app/Contents/MacOS/nwjs . (suppose the current directory contains 'package.json')
 ```
 * You can get more information from [here](https://github.com/nwjs/nw.js)
+
+### Distribute app
+```
+npm run gulp
+```
+Currently, the app for osx32/osx64/win32/win64 platform will be builded and placed at target folder
+
