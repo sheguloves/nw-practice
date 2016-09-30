@@ -17,18 +17,18 @@ var bases = {
 var paths = {
     nodemodules: ['node_modules/bcrypt-nodejs/**',
         'node_modules/diskdb/**'],
-    styles: ['bower_components/bootstrap/dist/css/bootstrap.min.css',
-        'bower_components/font-awesome/css/font-awesome.min.css',
+    styles: ['node_modules/bootstrap/dist/css/bootstrap.min.css',
+        'app/assets/css/font-awesome.min.css',
         'app/assets/css/app.css'
     ],
     fonts: [
-        'bower_components/bootstrap/dist/fonts/*.*',
-        'bower_components/font-awesome/fonts/*.*'
+        'node_modules/bootstrap/dist/fonts/*.*',
+        'app/assets/fonts/*.*'
     ],
-    libs: ['bower_components/jquery/dist/jquery.min.js',
-        'bower_components/angular/angular.min.js',
-        'bower_components/angular-route/angular-route.min.js',
-        'bower_components/angular-animate/angular-animate.min.js'
+    libs: ['node_modules/jquery/dist/jquery.min.js',
+        'node_modules/angular/angular.min.js',
+        'node_modules/angular-route/angular-route.min.js',
+        'node_modules/angular-animate/angular-animate.min.js'
     ],
     indexhtml: ['index.html'],
     copyfiles: ['service/*.js', 'service/datastore/*.*', 'app/views/*.*', 'package.json'],
@@ -91,7 +91,7 @@ gulp.task('html-replace', ['clean', 'copy-files', 'copy-fonts', 'concat-css',
 });
 
 
-// build app 
+// build app
 gulp.task('build-app', ['clean', 'html-replace', 'copy-node-modules'], function() {
     // before run this task, need to set proxy if your network is behind firewall,
     // and nw don't support proxy currently, but you can set the environment varibles

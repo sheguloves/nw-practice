@@ -4,6 +4,7 @@
   "description": "This is a NW.js practice",
   "main": "index.html",
   "nodejs": true,
+  "private": true,
   "single-instance": true,
   "author": {
     "name": "Felix Xi",
@@ -20,12 +21,17 @@
     "url": "https://github.com/sheguloves/nw-practice/issues"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "pregulp": "npm install",
     "gulp": "gulp"
   },
   "dependencies": {
+    "angular": "~1.4.7",
+    "angular-animate": "~1.4.7",
+    "angular-route": "~1.4.7",
     "bcrypt-nodejs": "0.0.3",
-    "diskdb": "^0.1.14"
+    "bootstrap": "~3.3.5",
+    "diskdb": "^0.1.14",
+    "jquery": "^3.1.1"
   },
   "devDependencies": {
     "bower": "^1.6.5",
