@@ -19,16 +19,16 @@ var paths = {
         'node_modules/diskdb/**'],
     styles: ['node_modules/bootstrap/dist/css/bootstrap.min.css',
         'app/assets/css/font-awesome.min.css',
+        'app/lib/angular-datepicker.css',
         'app/assets/css/app.css'
     ],
     fonts: [
-        'node_modules/bootstrap/dist/fonts/*.*',
-        'app/assets/fonts/*.*'
+        'app/assets/font/*.*'
     ],
-    libs: ['node_modules/jquery/dist/jquery.min.js',
+    libs: ['node_modules/moment/moment.js',
         'node_modules/angular/angular.min.js',
         'node_modules/angular-route/angular-route.min.js',
-        'node_modules/angular-animate/angular-animate.min.js'
+        'app/lib/angular-datepicker.js'
     ],
     indexhtml: ['index.html'],
     copyfiles: ['service/*.js', 'service/datastore/*.*', 'app/views/*.*', 'package.json'],
@@ -75,7 +75,7 @@ gulp.task('concat-css', ['clean'], function() {
 
 gulp.task('copy-fonts', ['clean'], function() {
     return gulp.src(paths.fonts)
-        .pipe(gulp.dest(bases.app + 'fonts'));
+        .pipe(gulp.dest(bases.app + 'font'));
 });
 
 // replace css/libs/js with min files
@@ -83,7 +83,8 @@ gulp.task('html-replace', ['clean', 'copy-files', 'copy-fonts', 'concat-css',
     'compressjs', 'concat-vendor'],  function() {
     return gulp.src(paths.indexhtml)
         .pipe(htmlreplace({
-            'css': ['app/css/bootstrap.min.css', 'app/css/font-awesome.min.css', 'app/css/app.css'],
+            'css': ['app/css/bootstrap.min.css', 'app/css/angular-datepicker.css',
+                'app/css/font-awesome.min.css', 'app/css/app.css'],
             'libs': 'app/js/vendor.min.js',
             'js': 'app/js/app.min.js'
         }))
@@ -99,7 +100,7 @@ gulp.task('build-app', ['clean', 'html-replace', 'copy-node-modules'], function(
     var nw = new NwBuilder({
         version: '0.12.3',
         files: './build/**',
-        platforms: ['osx32', 'osx64', 'win32', 'win64'],
+        platforms: ['win32', 'win64'],
         buildDir: "./target"
     });
 

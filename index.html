@@ -8,26 +8,28 @@
 
     <!-- build:css -->
     <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="app/assets/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="app/lib/angular-datepicker.css">
+    <link rel="stylesheet" type="text/css" href="app/assets/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="app/assets/css/app.css">
     <!-- endbuild -->
 
     <!-- build:libs -->
-    <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="node_modules/moment/moment.js"></script>
     <script type="text/javascript" src="node_modules/angular/angular.js"></script>
+    <script type="text/javascript" src="app/lib/angular-datepicker.js"></script>
     <script type="text/javascript" src="node_modules/angular-route/angular-route.js"></script>
-    <script type="text/javascript" src="node_modules/angular-animate/angular-animate.js"></script>
     <!-- endbuild -->
 
     <!-- build:js -->
     <script type="text/javascript" src="app/main.js"></script>
     <script type="text/javascript" src="app/service/customerService.js"></script>
+    <script type="text/javascript" src="app/directives/appDirective.js"></script>
     <script type="text/javascript" src="app/controllers/appController.js"></script>
     <!-- endbuild -->
 </head>
 
 <body>
-    <div ng-view class="view-animation"></div>
+    <div ng-view class="view_container"></div>
     <footer class="footer">
         <p>© 2015 Build by Felix Xi</p>
     </footer>

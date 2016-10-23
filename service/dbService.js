@@ -20,7 +20,7 @@ dbService.customerExist = function(options) {
 }
 
 dbService.getCustomerDetail = function(customerId) {
-    return db.customers.find({_id: customerId});
+    return db.customers.find({ _id: customerId });
 };
 
 dbService.updateCustomer = function(customer) {
@@ -40,7 +40,7 @@ dbService.updateCustomer = function(customer) {
 };
 
 dbService.removeCustomer = function(customer) {
-    return db.customers.remove(customer, false /* multi, default is true */);
+    return db.customers.remove(customer, false /* multi, default is true */ );
 };
 
 module.exports = dbService;

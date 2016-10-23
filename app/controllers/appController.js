@@ -1,37 +1,151 @@
 var appController = angular.module('appController', []);
 
-appController.controller('customerListCtrl', ['$scope', '$timeout', 'customerService',
-    function ($scope, $timeout, customerService) {
+appController.controller('addCtrl', ['$scope', '$location', 'customerService',
+    function($scope, $location, customerService) {
+    $scope.information = {
+        carNumber: undefined,
+        carType: "",
+        mailCount: undefined,
+        name: "",
+        enterDate: "",
+        countDate: "",
+        cost: {
+            items: [],
+            other: ""
+        },
+        stuffList: [],
+        worktime: {
+            items: [],
+            other: ""
+        }
+    };
+
+    $scope.costItemTemp = {
+        name: "",
+        cost: 0
+    };
+    $scope.workTimeItemTemp = {
+        name: "",
+        cost: 0
+    };
+
+    $scope.stuffTemp = {
+        name: "",
+        unit: "",
+        number: 0,
+        cost: 0
+    };
+
+    $scope.onStuffRemove = function(index) {
+        $scope.information.stuffList.splice(index, 1);
+    };
+
+    $scope.onCostRemove = function(index) {
+        $scope.information.cost.items.splice(index, 1);
+    };
+
+    $scope.onWorktimeRemove = function(index) {
+        $scope.information.worktime.items.splice(index, 1);
+    };
+
+    $scope.onCostAdd = function() {
+        $scope.information.cost.items.push(angular.copy($scope.costItemTemp));
+        $scope.costItemTemp = {
+            name: "",
+            cost: 0
+        };
+    };
+
+    $scope.onStuffAdd = function() {
+        $scope.information.stuffList.push(angular.copy($scope.stuffTemp));
+        $scope.stuffTemp = {
+            name: "",
+            unit: "",
+            number: "",
+            cost: 0
+        };
+    };
+
+    $scope.onWorktimeAdd = function() {
+        $scope.information.worktime.items.push(angular.copy($scope.workTimeItemTemp));
+        $scope.workTimeItemTemp = {
+            name: "",
+            cost: 0
+        };
+    };
+
+    $scope.onSubmit = function() {
+        if ($scope.information.enterDate && typeof $scope.information.enterDate !== "string") {
+            $scope.information.enterDate = $scope.information.enterDate.format("YYYY-MM-DD");
+        }
+        if ($scope.information.countDate && typeof $scope.information.countDate !== "string") {
+            $scope.information.countDate = $scope.information.countDate.format("YYYY-MM-DD");
+        }
+        var result = customerService.addCustomer($scope.information);
+        if (result.code === 0) {
+            $scope.hasError = true;
+        } else {
+            $scope.hasError = false;
+            $location.path('/customers');
+        }
+    };
+
+    $scope.onCancel = function() {
+        $location.path('/customers');
+    };
+
+    $scope.getAllCost = function(list) {
+        var cost = 0;
+        if (list && list.length > 0) {
+            for (var i = 0; i < list.length; i++) {
+                cost = cost + Number(list[i].cost);
+            }
+        }
+        return cost;
+    };
+
+}]);
+
+appController.controller('customerListCtrl', ['$scope', 'customerService',
+    function ($scope, customerService) {
         // initial fields
         $scope.sortType = "name";
         $scope.sortReverse = false;
         $scope.searchText = "";
-        $scope.removeSuccess = false;
-        $scope.removeCustomer = "";
 
         $scope.customers = customerService.getCustomerList();
 
-        var timer;
+
+
+        $scope.onExport = function() {
+            var nw = require('nw.gui'); //This line is only required for NW.js 0.12.x and below
+            var fs = require('fs');
+            var path = require('path');
+
+            var file = 'my-settings-file.json';
+            var filePath = path.join(nw.App.dataPath, file);
+            fs.writeFile(filePath, $scope.customers, function(err) {
+                if (err) {
+                    console.info("There was an error attempting to save your data.");
+                    console.warn(err.message);
+                    return;
+                } else {
+                    console.log(filePath, 'Settings saved');
+                }
+            });
+        };
 
         $scope.removeCustomer = function(customer) {
-            if ($scope.removeSuccess) {
-                $timeout.cancel(timer);
-            }
             var result = customerService.removeCustomer(customer);
             if (result === true) {
                 var index = $scope.customers.indexOf(customer);
                 if (index > -1) {
                     $scope.customers.splice(index, 1);
-                    $scope.customerName = customer.name;
-                    $scope.removeSuccess = true;
-
-                    timer = $timeout(resetStates, 3000);
                 }
+                $scope.hasError = false;
+            } else {
+                $scope.hasError = true;
             }
-        };
-
-        var resetStates = function() {
-            $scope.removeSuccess = false;
         };
 
         $scope.search = function(item) {
@@ -39,129 +153,132 @@ appController.controller('customerListCtrl', ['$scope', '$timeout', 'customerSer
             if (item.name && angular.lowercase(item.name).indexOf(searchText) !== -1) {
                 return true;
             }
-            if (item.phone && angular.lowercase(item.phone).indexOf(searchText) !== -1) {
+            if (item.carType && angular.lowercase(item.carType).indexOf(searchText) !== -1) {
                 return true;
             }
-            if (item.comments && angular.lowercase(item.comments).indexOf(searchText) !== -1) {
+            if (item.carNumber && angular.lowercase(item.carNumber).indexOf(searchText) !== -1) {
+                return true;
+            }
+            if (item.enterDate && angular.lowercase(item.enterDate).indexOf(searchText) !== -1) {
+                return true;
+            }
+            if (item.countDate && angular.lowercase(item.countDate).indexOf(searchText) !== -1) {
                 return true;
             }
             return false;
         };
-
-        $scope.$on("$destroy", function(event) {
-            $timeout.cancel(timer);
-        });
     }]
 );
 
-appController.controller('customerDetailCtrl', ['$scope', '$routeParams', '$timeout', 'customerService',
-    function ($scope, $routeParams, $timeout, customerService) {
-        var customers = customerService.getCustomerDetail($routeParams.customerId);
-        var customer = null;
-        if (customers.length > 0) {
-            customer = customers[0];
-            $scope.customer = angular.copy(customer);
-        } else {
-            $scope.customer = null;
-        }
-
-        var timer;
-        $scope.updateSuccess = false;
-        $scope.profilesChanged = false;
-
-        $scope.updateCustomer = function(customer) {
-            if ($scope.updateSuccess) {
-                $timeout.cancel(timer);
-            }
-            var result = customerService.updateCustomer(customer);
-            $scope.profilesChanged = false;
-            $scope.updateSuccess = true;
-            $scope.customerName = customer.name;
-
-            timer = $timeout(resetStates, 3000);
+appController.controller('customerDetailCtrl', ['$scope', '$routeParams', '$location', 'customerService',
+    function ($scope, $routeParams, $location, customerService) {
+        $scope.costItemTemp = {
+            name: "",
+            cost: 0
+        };
+        $scope.workTimeItemTemp = {
+            name: "",
+            cost: 0
         };
 
-        var resetStates = function() {
-            $scope.updateSuccess = false;
+        $scope.stuffTemp = {
+            name: "",
+            unit: "",
+            number: 0,
+            cost: 0
         };
 
-        $scope.changeHandler = function() {
-            for (var field in customer) {
-                if (customer.hasOwnProperty(field) &&
-                    customer[field] !== $scope.customer[field]) {
-                    $scope.profilesChanged = true;
-                    return;
+        $scope.onStuffRemove = function(index) {
+            $scope.information.stuffList.splice(index, 1);
+        };
+
+        $scope.onCostRemove = function(index) {
+            $scope.information.cost.items.splice(index, 1);
+        };
+
+        $scope.onWorktimeRemove = function(index) {
+            $scope.information.worktime.items.splice(index, 1);
+        };
+
+        $scope.onCostAdd = function() {
+            $scope.information.cost.items.push(angular.copy($scope.costItemTemp));
+            $scope.costItemTemp = {
+                name: "",
+                cost: 0
+            };
+        };
+
+        $scope.onStuffAdd = function() {
+            $scope.information.stuffList.push(angular.copy($scope.stuffTemp));
+            $scope.stuffTemp = {
+                name: "",
+                unit: "",
+                number: "",
+                cost: 0
+            };
+        };
+
+        $scope.onWorktimeAdd = function() {
+            $scope.information.worktime.items.push(angular.copy($scope.workTimeItemTemp));
+            $scope.workTimeItemTemp = {
+                name: "",
+                cost: 0
+            };
+        };
+
+        $scope.onCancel = function() {
+            $location.path('/customers');
+        };
+
+        $scope.getAllCost = function(list) {
+            var cost = 0;
+            if (list && list.length > 0) {
+                for (var i = 0; i < list.length; i++) {
+                    cost = cost + Number(list[i].cost);
                 }
             }
+            return cost;
+        };
+
+        var informations = customerService.getCustomerDetail($routeParams.customerId);
+        var information = null;
+        if (informations.length > 0) {
+            information = informations[0];
+            $scope.information = angular.copy(information);
+        } else {
+            $scope.information = null;
+        }
+
+        $scope.profilesChanged = false;
+
+        $scope.updateCustomer = function() {
+            if ($scope.information.enterDate && typeof $scope.information.enterDate !== "string") {
+                $scope.information.enterDate = $scope.information.enterDate.format("YYYY-MM-DD");
+            }
+            if ($scope.information.countDate && typeof $scope.information.countDate !== "string") {
+                $scope.information.countDate = $scope.information.countDate.format("YYYY-MM-DD");
+            }
+            var result = customerService.updateCustomer($scope.information);
+            information = angular.copy($scope.information);
             $scope.profilesChanged = false;
         };
 
-        $scope.reset = function () {
-            $scope.customer = {};
-            $scope.customer = angular.copy(customer);
-        };
-
-        $scope.$on("$destroy", function(event) {
-            $timeout.cancel(timer);
-        });
-    }]
-);
-
-appController.controller('customerAddCtrl', ['$scope', '$timeout', 'customerService',
-    function ($scope, $timeout, customerService) {
-
-        $scope.addSuccess = false;
-        $scope.nameExist = false;
-        $scope.phoneExist = false;
-
-        var timer;
-
-        $scope.addCustomer = function(customer) {
-            var result = customerService.addCustomer(customer);
-            switch (result.code) {
-                case 0:
-                    $scope.hasError = true;
-                    break;
-                case 2:
-                    $scope.customerExist = true;
-                    break;
-                case 1:
-                    $scope.nameExist = result.sameName;
-                    $scope.phoneExist = result.samePhone;
-                    if ($scope.addSuccess) {
-                        $timeout.cancel(timer);
-                    }
-                    $scope.addSuccess = true;
-                    $scope.customerName = customer.name;
-                    $scope.addform.$setPristine();
-                    $scope.customer = {};
-                    timer = $timeout(resetStates, 5000);
-                    break;
-                default:
-                    break;
+        $scope.$watch('information', function(newValue, oldValue) {
+            if (!newValue || !oldValue) {
+                return;
             }
-
-        };
-
-        var resetStates = function () {
-            $scope.addSuccess = false;
-            $scope.nameExist = false;
-            $scope.phoneExist = false;
-        };
-
-        $scope.changed = function() {
-            $scope.customerExist = false;
-            $scope.nameExist = false;
-            $scope.phoneExist = false;
-        };
-
-        $scope.reset = function() {
-            $scope.customer = {};
-            $scope.addform.$setPristine();
-        };
-
-        $scope.$on("$destroy", function(event) {
-            $timeout.cancel(timer);
-        });
+            if ($scope.information.enterDate && typeof $scope.information.enterDate !== "string") {
+                $scope.information.enterDate = $scope.information.enterDate.format("YYYY-MM-DD");
+            }
+            if ($scope.information.countDate && typeof $scope.information.countDate !== "string") {
+                $scope.information.countDate = $scope.information.countDate.format("YYYY-MM-DD");
+            }
+            if (!angular.equals($scope.information, information)) {
+                $scope.profilesChanged = true;
+            } else {
+                $scope.profilesChanged = false;
+            }
+        }, true);
     }]
 );
+

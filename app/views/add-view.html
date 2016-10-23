@@ -116,8 +116,8 @@
                     <td></td>
                     <td><input type="text" ng-model="stuffTemp.name"></td>
                     <td><input type="text" ng-model="stuffTemp.unit"></td>
-                    <td><input type="text" class="number" number-only ng-model="stuffTemp.number"></td>
-                    <td><input type="text" class="number" number-only ng-model="stuffTemp.cost"></td>
+                    <td><input type="text" number-only class="number" ng-model="stuffTemp.number"></td>
+                    <td><input type="text" number-only class="number" ng-model="stuffTemp.cost"></td>
                     <td><button class="btn btn-link btn-xs" ng-click="onStuffAdd()" ng-disabled="!stuffTemp.name || !stuffTemp.number">添加</button></td>
                 </tr>
             </tbody>
@@ -157,7 +157,7 @@
                 <tr>
                     <td></td>
                     <td><input type="text" ng-model="workTimeItemTemp.name"></td>
-                    <td><input class="number" type="text" ng-model="workTimeItemTemp.cost"></td>
+                    <td><input class="number" number-only type="text" ng-model="workTimeItemTemp.cost"></td>
                     <td><button class="btn btn-link btn-xs" ng-disabled="!workTimeItemTemp.name" ng-click="onWorktimeAdd()">添加</button></td>
                     <td></td>
                 </tr>
@@ -165,7 +165,7 @@
         </table>
     </div>
     <div class="button-set">
-        <button ng-disabled="!profilesChanged" ng-click="updateCustomer()" class="btn btn-primary">更新</button>
-        <button ng-click="onCancel()" class="btn btn-default">返回</button>
+        <button class="btn btn-primary btn-sm" ng-click="onSubmit()" ng-disabled="!information.carNumber || !information.name">确定</button>
+        <button class="btn btn-default btn-sm" ng-click="onCancel()">取消</button>
     </div>
 </div>
